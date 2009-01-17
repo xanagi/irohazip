@@ -1,0 +1,17 @@
+﻿/* 
+   Localizable.strings
+   IrohaZip
+
+   Created by Tomonori Kusanagi on 09/01/15.
+   Copyright 2009 Banana Systems. All rights reserved.
+ */
+
+"Done" = "完了";
+"zipruby ( >0.2.9 ) must be installed." = "zipruby ( >0.2.9 ) が必要です";
+"Install zipruby by executing '$sudo gem install zipruby' from Terminal.app." = "ターミナルから '$sudo gem install zipruby' を実行して zipruby をインストールしてください";
+"Compression failed." = "圧縮できませんでした";
+"Invalid file." = "不正なファイルです";
+" is not found." = "が見つかりません";
+" already exists." = "が既に存在します";
+"Generating file.." = "ファイルを生成中..";
+"Encrypting.." = "暗号化中..";
