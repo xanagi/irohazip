@@ -3,7 +3,7 @@
 //  IrohaZip
 //
 //  Created by Tomonori Kusanagi on 09/01/13.
-//  Copyright (c) 2009 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2009 Banana Systems. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
