@@ -67,7 +67,7 @@ class WinJFriendlyArchiver < OSX::NSObject
     # zip 圧縮.
     compress_part_parcentage = (@do_encrypt && @password) ? 80.0 : 90.0
     Zip::Archive.open(@tmp_zip_path, Zip::CREATE) do |ar|
-      files = files.select{|f| f != '.DS_Store'}
+      files = files.select{|f| f != '.DS_Store'} # .DS_Store を除くファイル.
       prev = -1
       files.each_with_index do |file, i|
         # zip中のエントリ名. ベースディレクトリからの相対パスにして、Shift_JISに変換.
