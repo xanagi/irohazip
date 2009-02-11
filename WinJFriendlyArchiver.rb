@@ -12,7 +12,8 @@ require 'tmpdir'
 
 class WinJFriendlyArchiver < OSX::NSObject
   ib_outlet :button
-  attr_accessor :do_encrypt, :password, :current_progress, :current_file
+  attr_accessor :do_encrypt, :password, :current_progress, :current_file, :current_status
+  attr_accessor :progress_animate, :progress_intermidiate
   attr_reader :filename
   
   # 圧縮対象ファイルをセット.
@@ -62,10 +63,10 @@ class WinJFriendlyArchiver < OSX::NSObject
 
     #@tmp_zip_path = "#{Dir.tmpdir}/#{zip_path}.tmp"
     @tmp_zip_path = "#{zip_path}.tmp"
-    cleanup_tempfile
-    
-    # zip 圧縮.
-    compress_part_parcentage = (@do_encrypt && @password) ? 80.0 : 90.0
+    cleanup_tempfile # 既に一時ファイルがあれば削除しておく.
+	
+	# zip 圧縮.
+	self.state = :compressing
     Zip::Archive.open(@tmp_zip_path, Zip::CREATE) do |ar|
       files = files.select{|f| f != '.DS_Store'} # .DS_Store を除くファイル.
       prev = -1
@@ -75,29 +76,47 @@ class WinJFriendlyArchiver < OSX::NSObject
         name = NKF::nkf("-Ws", file_path)
         bin = File.open(file, "rb").read
         ar.add_buffer(name, bin)
-        current = (compress_part_parcentage * (i + 1) / files.size).to_i # 整数%にする.
+        current = (100.0 * (i + 1) / files.size).to_i # 整数%にする.
+		self.setValue_forKey_(file_path, 'current_file') # 現在圧縮中のファイル表示更新.
         if current > prev
-          self.setValue_forKey_(current * 1.0, 'current_progress')
-          self.setValue_forKey_(file_path, 'current_file')
+          self.setValue_forKey_(current * 1.0, 'current_progress') # プログレスバー表示更新.
           prev = current
-          sleep(0.01)
         end
       end
-      self.setValue_forKey_(OSX::NSLocalizedString('Generating file..'), 'current_file')
+      self.state = :finalizing
     end
 
     # 暗号化.
     if @do_encrypt && @password
-      self.setValue_forKey_(90.0, 'current_progress')
-      self.setValue_forKey_(OSX::NSLocalizedString('Encrypting..'), 'current_file')
+      self.state = :encrypting
       Zip::Archive.encrypt(@tmp_zip_path, @password.to_s)
     end
     
     # 完了処理.
     FileUtils.cp(@tmp_zip_path, zip_path)
-    self.setValue_forKey_(100.0, 'current_progress')
-    self.setValue_forKey_(OSX::NSLocalizedString('Done'), 'current_file')
+	cleanup_tempfile
+	self.state = :complete
     true
+  end
+  
+  # ステートを移行する.
+  def state=(state)
+	case state
+	when :compressing
+	  self.setValue_forKey_(OSX::NSLocalizedString('Compressing..'), 'current_status')
+	  self.setValue_forKey_(0.0, 'current_progress')
+	when :finalizing
+	  self.setValue_forKey_(OSX::NSLocalizedString('Generating file..'), 'current_status')
+	  self.setValue_forKey_("", 'current_file')
+      self.setValue_forKey_(true, 'progress_intermidiate')
+	  self.setValue_forKey_(true, 'progress_animate')
+    when :encrypting
+	  self.setValue_forKey_(OSX::NSLocalizedString('Encrypting..'), 'current_status')
+	when :complete
+	  self.setValue_forKey_(OSX::NSLocalizedString('Done'), 'current_status')
+	  self.setValue_forKey_(false, 'progress_intermidiate')
+	  self.setValue_forKey_(100.0, 'current_progress')
+	end
   end
   
   # 一時ファイルを削除.

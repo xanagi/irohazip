@@ -13,5 +13,6 @@
 "Invalid file." = "不正なファイルです";
 " is not found." = "が見つかりません";
 " already exists." = "が既に存在します";
+"Compressing.." = "圧縮中..";
 "Generating file.." = "ファイルを生成中..";
 "Encrypting.." = "暗号化中..";

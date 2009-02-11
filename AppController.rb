@@ -43,6 +43,7 @@ class AppController < OSX::NSObject
   
   # 終了時の後始末.
   def applicationWillTerminate(sender)
+    # 消し損なっていた一時ファイルがあれば削除.
     @archiver.cleanup_tempfile
   end
   
@@ -50,7 +51,7 @@ class AppController < OSX::NSObject
   def button_pressed
     case(@state)
 	  when :initialized
-	    self.set_state :archiving
+	    self.state = :archiving
 	    archive
     end
   end
@@ -69,14 +70,13 @@ class AppController < OSX::NSObject
   ib_action :progress_button_pressed
   
   # 状態をセット.
-  def set_state(state)
+  def state=(state)
+	@state = state
     case(state)
     when :archiving
-      @state = :archiving
       @progress_window.makeKeyAndOrderFront(self)
       @window.close
     when :finished
-      @state = :finished
       @progress_button.setTitle(OSX::NSLocalizedString('Done'))
       @progress_button.setEnabled(true)
     end
@@ -107,7 +107,7 @@ class AppController < OSX::NSObject
     t = Thread.new(self, @archiver, @window) do |controller, arhiver, window|
       begin
         arhiver.create_zip
-        controller.set_state :finished
+        controller.state = :finished
       rescue => e
         alert = OSX::NSAlert.alloc.init
         alert.addButtonWithTitle('OK')

@@ -1,5 +1,6 @@
 ﻿/* Localized versions of Info.plist keys */
 
 CFBundleName = "いろはZip";
+CFBundleDisplayName = "いろはZip";
 CFBundleGetInfoString = "IrohaZip version 0.1, Copyright 2009 Banana Systems.";
 NSHumanReadableCopyright = "Copyright 2009 Banana Systems.";

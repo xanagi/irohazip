@@ -29,7 +29,6 @@
 		4DDCA7120ACC9A6100E082CE /* IrohaZip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IrohaZip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D128408B0F1EE0B100D74D2C /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D12840900F1EE16E00D74D2C /* Japanese */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/Localizable.strings; sourceTree = "<group>"; };
-		D128410A0F1EEAE200D74D2C /* Japanese */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = Japanese; path = Japanese.lproj/MainMenu.nib; sourceTree = "<group>"; };
 		D19121000F1C61810047C011 /* AppController.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = AppController.rb; sourceTree = "<group>"; };
 		D191210F0F1C63D80047C011 /* Japanese */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Japanese; path = Japanese.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D1FA98890F1DC11700B645E7 /* WinJFriendlyArchiver.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = WinJFriendlyArchiver.rb; sourceTree = "<group>"; };
@@ -93,7 +92,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				4DDCA7110ACC9A6100E082CE /* Info.plist */,
 			);
 			name = IrohaZip;
 			sourceTree = "<group>";
@@ -110,6 +108,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4DDCA7110ACC9A6100E082CE /* Info.plist */,
 				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				D128408D0F1EE14B00D74D2C /* Localizable.strings */,
@@ -216,7 +215,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				29B97319FDCFA39411CA2CEA /* English */,
-				D128410A0F1EEAE200D74D2C /* Japanese */,
 			);
 			name = MainMenu.nib;
 			sourceTree = "<group>";
